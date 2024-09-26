@@ -9,6 +9,7 @@ function App() {
       </header>
       <main className="container mx-auto p-4">
         <Chat />
+
       </main>
     </div>
   );

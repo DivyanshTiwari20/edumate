@@ -8,6 +8,8 @@
 //   }
 // })
 
+
+// this changed the whole things
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 

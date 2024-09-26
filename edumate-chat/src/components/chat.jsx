@@ -33,7 +33,7 @@ const Chat = () => {
   useEffect(scrollToBottom, [messages]);
 
   useEffect(() => {
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
     const initializedChat = model.startChat({
       history: initialChatHistory,
       generationConfig,
