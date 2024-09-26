@@ -1,13 +1,24 @@
+// module.exports = {
+//   content: [
+//     "./index.html",
+//     "./src/**/*.{js,ts,jsx,tsx}",
+//   ],
+//   theme: {
+//     extend: {},
+//   },
+//   plugins: [
+//     require('@tailwindcss/forms'),
+//   ],
+//   darkMode: 'class',
+// }
+
 module.exports = {
   content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
+    './index.html',
+    './src/**/*.{js,ts,jsx,tsx}',  // Include all relevant file types
   ],
   theme: {
-    extend: {},
+    extend: {},  // Customize your theme here
   },
-  plugins: [
-    require('@tailwindcss/forms'),
-  ],
-  darkMode: 'class',
+  plugins: [],   // Add any Tailwind plugins if necessary
 }
