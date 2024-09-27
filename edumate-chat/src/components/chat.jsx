@@ -1,10 +1,12 @@
-import React, { useState, useEffect, useRef } from "react";
-import { GoogleGenerativeAI } from "@google/generative-ai";
-import ReactMarkdown from "react-markdown";
+import React, { useState, useEffect, useRef } from 'react';
+import { GoogleGenerativeAI } from '@google/generative-ai';
+import ReactMarkdown from 'react-markdown';
+
+
 
 const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 if (!API_KEY) {
-  console.error("API key is missing. Please check your environment variables.");
+  console.error('API key is missing. Please check your environment variables.');
   // Handle the missing API key scenario
 }
 const genAI = new GoogleGenerativeAI(API_KEY);
@@ -23,6 +25,8 @@ const initialChatHistory = [
       },
     ],
   },
+  
+  
 ];
 const generationConfig = {
   temperature: 1.0,
@@ -31,9 +35,11 @@ const generationConfig = {
   maxOutputTokens: 2048,
 };
 
+
+
 const Chat = () => {
   const [messages, setMessages] = useState([]);
-  const [input, setInput] = useState("");
+  const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [chat, setChat] = useState(null);
   const messagesEndRef = useRef(null);
@@ -57,25 +63,23 @@ const Chat = () => {
     e.preventDefault();
     if (!input.trim()) return;
 
-    const userMessage = { role: "user", content: input };
-    setMessages((prev) => [...prev, userMessage]);
-    setInput("");
+    const userMessage = { role: 'user', content: input };
+    setMessages(prev => [...prev, userMessage]);
+    setInput('');
     setIsLoading(true);
 
     try {
-      const result = await chat.sendMessage(input);
-      const botMessage = { role: "bot", content: result.response.text() };
-      setMessages((prev) => [...prev, botMessage]);
-    } catch (error) {
-      console.error("Error:", error);
-      let errorMessage =
-        "I'm sorry, I'm having trouble connecting right now. Please try again later.";
-      if (error.message.includes("API key not valid")) {
-        errorMessage =
-          "There's an issue with the API key. Please contact support.";
+        const result = await chat.sendMessage(input);
+        const botMessage = { role: 'bot', content: result.response.text() };
+        setMessages(prev => [...prev, botMessage]);
+      } catch (error) {
+        console.error('Error:', error);
+        let errorMessage = "I'm sorry, I'm having trouble connecting right now. Please try again later.";
+        if (error.message.includes('API key not valid')) {
+          errorMessage = "There's an issue with the API key. Please contact support.";
+        }
+        setMessages(prev => [...prev, { role: 'bot', content: errorMessage }]);
       }
-      setMessages((prev) => [...prev, { role: "bot", content: errorMessage }]);
-    }
 
     setIsLoading(false);
   };
@@ -84,52 +88,34 @@ const Chat = () => {
     <div className="flex flex-col h-screen justify-center items-center">
       <div className="flex-1 w-full max-w-4xl overflow-y-auto p-4 space-y-4">
         {messages.map((message, index) => (
-          <div
-            key={index}
-            className={`flex ${
-              message.role === "user" ? "justify-end" : "justify-start"
-            }`}
-          >
-            <div
-              className={`max-w-xs lg:max-w-md xl:max-w-lg px-4 py-2 rounded-lg ${
-                message.role === "user"
-                  ? "bg-blue-500 text-white"
-                  : "bg-gray-700 text-white"
-              }`}
-            >
+          <div key={index} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+            <div className={`max-w-xs lg:max-w-md xl:max-w-lg px-4 py-2 rounded-lg ${message.role === 'user' ? 'bg-blue-500 text-white' : 'bg-gray-700 text-white'}`}>
               {message.content}
             </div>
           </div>
         ))}
         <div ref={messagesEndRef} />
       </div>
-
-      {/* chat mesage area */}
       <div className="container mx-auto max-w-screen-lg p-5">
-        <div className="content">{/* Your content here */}</div>
-
-        <form
-          onSubmit={sendMessage}
-          className="fixed bottom-0 left-0 right-0 p-4 border-t border-gray-700 bg-gray-900"
-        >
-          <div className="flex space-x-4">
-            <input
-              type="text"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              placeholder="Message EduMate"
-              className="flex-1 bg-gray-800 text-white border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
-            >
-              {isLoading ? "Sending..." : "Send"}
-            </button>
-          </div>
-        </form>
-      </div>
+      <form onSubmit={sendMessage} className="p-4 border-t border-gray-700">
+        <div className="flex space-x-4">
+          <input
+            type="text"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="Type topic name to start the Test"
+            className="flex-1 bg-gray-800 text-white border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
+          >
+            {isLoading ? 'Sending...' : 'Send'}
+          </button>
+        </div>
+      </form>
+    </div>
     </div>
   );
 };
