@@ -100,6 +100,36 @@
   flex-direction: column;
 }
 
+.message ul, .message ol {
+  padding-left: 20px;
+  margin: 10px 0;
+}
+
+.message strong {
+  font-weight: bold;
+}
+
+.message em {
+  font-style: italic;
+}
+
+.message p {
+  margin-bottom: 10px;
+}
+
+/* Add these styles to your CSS file */
+ul {
+  list-style-type: disc;
+  margin-left: 20px;
+}
+
+strong {
+  font-weight: bold;
+}
+
+em {
+  font-style: italic;
+}
 
 /* #chat-messages::-webkit-scrollbar {
   width: 10px;

@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
 import Chat from './components/chat';  // Correct component imports
 import Summarizer from './components/summarizer';
-import Playground from './components/playGround';  // Ensure correct case sensitivity
+import Playground from './components/playground';  // Ensure correct case sensitivity
 import Menu from './components/menu';
 
 function App() {
@@ -12,7 +12,7 @@ function App() {
       <div id="root">
         {/* Title Bar */}
         <div className="title-bar">
-          <h1>.EduMateChat</h1>
+          <h1><b>.EduMate</b></h1>
           <div className="tools-dropdown">
             <Menu />  {/* Tools dropdown menu for navigation */}
           </div>

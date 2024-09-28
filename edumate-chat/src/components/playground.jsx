@@ -90,7 +90,8 @@ const Chat = () => {
         {messages.map((message, index) => (
           <div key={index} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
             <div className={`max-w-xs lg:max-w-md xl:max-w-lg px-4 py-2 rounded-lg ${message.role === 'user' ? 'bg-blue-500 text-white' : 'bg-gray-700 text-white'}`}>
-              {message.content}
+                {/* Render messages with Markdown */}
+                <ReactMarkdown>{message.content}</ReactMarkdown>
             </div>
           </div>
         ))}

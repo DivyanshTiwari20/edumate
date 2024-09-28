@@ -2,8 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import ReactMarkdown from 'react-markdown';
 
-
-
 const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 if (!API_KEY) {
   console.error('API key is missing. Please check your environment variables.');
@@ -25,17 +23,14 @@ const initialChatHistory = [
       },
     ],
   },
-  
-  
 ];
+
 const generationConfig = {
   temperature: 1.0,
   topK: 1,
   topP: 1,
   maxOutputTokens: 2048,
 };
-
-
 
 const Chat = () => {
   const [messages, setMessages] = useState([]);
@@ -69,17 +64,17 @@ const Chat = () => {
     setIsLoading(true);
 
     try {
-        const result = await chat.sendMessage(input);
-        const botMessage = { role: 'bot', content: result.response.text() };
-        setMessages(prev => [...prev, botMessage]);
-      } catch (error) {
-        console.error('Error:', error);
-        let errorMessage = "I'm sorry, I'm having trouble connecting right now. Please try again later.";
-        if (error.message.includes('API key not valid')) {
-          errorMessage = "There's an issue with the API key. Please contact support.";
-        }
-        setMessages(prev => [...prev, { role: 'bot', content: errorMessage }]);
+      const result = await chat.sendMessage(input);
+      const botMessage = { role: 'bot', content: result.response.text() };
+      setMessages(prev => [...prev, botMessage]);
+    } catch (error) {
+      console.error('Error:', error);
+      let errorMessage = "I'm sorry, I'm having trouble connecting right now. Please try again later.";
+      if (error.message.includes('API key not valid')) {
+        errorMessage = "There's an issue with the API key. Please contact support.";
       }
+      setMessages(prev => [...prev, { role: 'bot', content: errorMessage }]);
+    }
 
     setIsLoading(false);
   };
@@ -90,32 +85,33 @@ const Chat = () => {
         {messages.map((message, index) => (
           <div key={index} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
             <div className={`max-w-xs lg:max-w-md xl:max-w-lg px-4 py-2 rounded-lg ${message.role === 'user' ? 'bg-blue-500 text-white' : 'bg-gray-700 text-white'}`}>
-              {message.content}
+              {/* Render messages with Markdown */}
+              <ReactMarkdown>{message.content}</ReactMarkdown>
             </div>
           </div>
         ))}
         <div ref={messagesEndRef} />
       </div>
       <div className="container mx-auto max-w-screen-lg p-5">
-      <form onSubmit={sendMessage} className="p-4 border-t border-gray-700">
-        <div className="flex space-x-4">
-          <input
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="Type topic name to start the Test"
-            className="flex-1 bg-gray-800 text-white border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
-          >
-            {isLoading ? 'Sending...' : 'Send'}
-          </button>
-        </div>
-      </form>
-    </div>
+        <form onSubmit={sendMessage} className="p-4 border-t border-gray-700">
+          <div className="flex space-x-4">
+            <input
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder="Message EduMate"
+              className="flex-1 bg-gray-800 text-white border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
+            >
+              {isLoading ? 'Sending...' : 'Send'}
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };
