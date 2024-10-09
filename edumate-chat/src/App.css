@@ -38,6 +38,7 @@
   flex-direction: column;
   padding: 1rem;
   overflow: hidden;
+  
 }
 
 .chat-messages {
@@ -50,6 +51,7 @@
   /* background-color: #2d2d2d; */
   border-radius: 0.5rem;
   margin-bottom: 1rem;
+  
   ;
 }
 

@@ -83,7 +83,7 @@ const Chat = () => {
     <div className="chat-container flex flex-col h-screen justify-center items-center">
       <div className=" chat-messages flex-1 w-full max-w-4xl overflow-y-auto p-4 space-y-4">
         {messages.map((message, index) => (
-          <div key={index} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+          <div key={index} className={`flex ${message.role === 'user' ? 'justify-end ' : 'justify-start'}`}>
             <div className={`max-w-xs lg:max-w-md xl:max-w-lg px-4 py-2 rounded-lg ${message.role === 'user' ? 'bg-blue-500 text-white' : 'bg-gray-700 text-white'}`}>
               {/* Render messages with Markdown */}
               <ReactMarkdown>{message.content}</ReactMarkdown>
