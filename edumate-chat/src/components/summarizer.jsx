@@ -151,7 +151,7 @@ const Chat = () => {
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Message to start your test"
+              placeholder="Message Summarizer"
               className="flex-1 bg-gray-800 text-white border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <button type="submit" disabled={isLoading}>
