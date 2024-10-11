@@ -56,7 +56,7 @@ const ChatMessage = ({ message }) => {
     <div className={`chat-message ${message.role === 'user' ? 'user' : 'bot'}`}>
       <div className={`message-box ${message.role}`}>
         {message.role === 'bot' && (
-          <img src="./public/templates/brain.png" alt="Logo" width="25" height="25" />
+          <img src="./templates/brain.png" alt="Logo" width="25" height="25" />
         )}
         <ReactMarkdown
           components={{
