@@ -32,6 +32,62 @@ const generationConfig = {
 };
 
 
+const ChatMessage = ({ message }) => {
+  const [copied, setCopied] = useState(false);
+  const [codeCopied, setCodeCopied] = useState(false);
+
+  const copyToClipboard = (text) => {
+    navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  const copyCodeToClipboard = (code) => {
+    navigator.clipboard.writeText(code);
+    setCodeCopied(true);
+    setTimeout(() => setCodeCopied(false), 2000);
+  };
+
+  return (
+    <div className={`chat-message ${message.role === 'user' ? 'user' : 'bot'}`}>
+      <div className={`message-box ${message.role}`}>
+        {message.role === 'bot' && (
+          <img src="./public/templates/brain.png" alt="Logo" width="25" height="25" />
+        )}
+        <ReactMarkdown
+          components={{
+            code({ node, inline, className, children, ...props }) {
+              return !inline ? (
+                <div className="code-container">
+                  <div className="code-header">
+                    <span>Code</span>
+                    <button className="copy-button" onClick={() => copyCodeToClipboard(String(children))}>
+                      {codeCopied ? 'Copied!' : 'Copy'}
+                    </button>
+                  </div>
+                  <SyntaxHighlighter style={okaidia} language="javascript" PreTag="div" {...props}>
+                    {String(children).replace(/\n$/, '')}
+                  </SyntaxHighlighter>
+                </div>
+              ) : (
+                <code className={className} {...props}>
+                  {children}
+                </code>
+              );
+            }
+          }}
+        >
+          {message.content}
+        </ReactMarkdown>
+        {message.role === 'bot' && (
+          <button className="copy-button" onClick={() => copyToClipboard(message.content)}>
+            {copied ? 'Copied!' : 'Copy'}
+          </button>
+        )}
+      </div>
+    </div>
+  );
+};
 
 const Chat = () => {
   const [messages, setMessages] = useState([]);
@@ -79,29 +135,23 @@ const Chat = () => {
 
     setIsLoading(false);
   };
+
   return (
     <div className="chat-container flex flex-col h-screen justify-center items-center">
       <div className="chat-messages flex-1 w-full max-w-4xl overflow-y-auto p-4">
         {messages.map((message, index) => (
-          <div
-            key={index}
-            className={`chat-message ${message.role === 'user' ? 'user' : 'bot'}`}
-          >
-            <div className={`message-box ${message.role}`}>
-              <ReactMarkdown>{message.content}</ReactMarkdown>
-            </div>
-          </div>
+          <ChatMessage key={index} message={message} />
         ))}
         <div ref={messagesEndRef} />
       </div>
       <div className="container mx-auto max-w-screen-lg p-5">
         <form onSubmit={sendMessage} className="p-4 border-t border-gray-700">
           <div className="flex space-x-4">
-            <input
+            <input  
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Message to summarize notes"
+              placeholder="Message to start your test"
               className="flex-1 bg-gray-800 text-white border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <button type="submit" disabled={isLoading}>
@@ -123,8 +173,7 @@ const Chat = () => {
         </form>
       </div>
     </div>
-  
-    );
-  };
+  );
+};
 
-  export default Chat;
+export default Chat;
