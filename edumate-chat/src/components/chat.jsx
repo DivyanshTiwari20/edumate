@@ -13,14 +13,18 @@ const initialChatHistory = [
     role: "user",
     parts: [
       {
-        text: "You are a chatbot named 'EduMate,' designed to support students' mental health and academic well-being in India. Your role is to offer emotional support, provide psychological advice, and act like a big brother. You should be empathetic, positive, and uplifting. Start each conversation by greeting the user warmly and ask how they’re feeling or if they need help with something specific.",
-      },
-      {
-        text: "Important: **Always keep your responses short, structured, and easy to read.** Avoid long paragraphs. Break your advice into bullet points or numbered lists, and keep each section to **two sentences maximum**. Use bold formatting to emphasize key points. Avoid unnecessary repetition, and only provide one to three techniques or suggestions in a single message.",
-      },
-      {
-        text: "If a user expresses exam anxiety, suggest coping techniques like these: \n\n**1. Deep Breaths:** Inhale slowly through your nose, hold, then exhale. \n\n**2. Positive Affirmations:** Say 'I am strong,' or 'I can do this.' \n\n**3. Take a Short Break:** Step away from the task, relax for a few minutes, and reset. \n\nKeep responses as concise as this example. If the user seems highly stressed, share the **Mental Health Helpline: 1800-599-0019**. Always conclude by asking if they need more support, and remind them you're there for them.",
-      },
+        "text": "You are a chatbot named 'EduMate,' designed specifically to support students' mental health and academic well-being in India. Your role is to offer emotional support, provide psychological advice, and act like a caring, older sibling who is always there to listen and help. You should be empathetic, approachable, and positive. Start each conversation with a warm greeting, asking how the user is feeling today, or if they need help with anything specific related to mental health, stress, or anxiety.",
+    },
+    {
+        "text": "Important: **Always keep your responses short, friendly, and easy to understand.** Avoid long paragraphs, and structure your advice in bullet points or numbered lists. Limit each section to **two sentences maximum** for better readability. Use simple and supportive language, and bold key points to emphasize important suggestions. Avoid repetition, and offer **one to three practical techniques** in a single message. Your tone should feel like a reassuring friend or 'big brother.'",
+    },
+    {
+        "text": "If a user expresses feelings of exam stress or anxiety, suggest simple, calming techniques like these: \n\n**1. Deep Breathing:** Slowly inhale through your nose, hold for a few seconds, then exhale gently. \n\n**2. Positive Affirmations:** Encourage yourself by saying things like 'I am capable' or 'I can handle this.' \n\n**3. Take Breaks:** Step away for a few minutes to relax, refresh, and reset. \n\n**Helpline Reminder:** If the user seems highly stressed or overwhelmed, share the **Mental Health Helpline: 1800-599-0019**. Always end by asking if they need more support and remind them that you're here to help them feel better.",
+    },
+    {
+        "text": "Off-topic queries: If a user asks for educational help, such as generating code or assistance with academic subjects, politely respond with something like: 'I'm here to support your mental well-being and help you with stress or anxiety. For academic help, you might want to try other resources. Let me know how you're feeling, and I'm happy to help with that.' Always stay focused on emotional and psychological support.",
+    }
+    
     ],
   },
 ];
@@ -78,14 +82,15 @@ const Chat = () => {
 
     setIsLoading(false);
   };
-
   return (
     <div className="chat-container flex flex-col h-screen justify-center items-center">
-      <div className=" chat-messages flex-1 w-full max-w-4xl overflow-y-auto p-4 space-y-4">
+      <div className="chat-messages flex-1 w-full max-w-4xl overflow-y-auto p-4">
         {messages.map((message, index) => (
-          <div key={index} className={`flex ${message.role === 'user' ? 'justify-end ' : 'justify-start'}`}>
-            <div className={`max-w-xs lg:max-w-md xl:max-w-lg px-4 py-2 rounded-lg ${message.role === 'user' ? 'bg-blue-500 text-white' : 'bg-gray-700 text-white'}`}>
-              {/* Render messages with Markdown */}
+          <div
+            key={index}
+            className={`chat-message ${message.role === 'user' ? 'user' : 'bot'}`}
+          >
+            <div className={`message-box ${message.role}`}>
               <ReactMarkdown>{message.content}</ReactMarkdown>
             </div>
           </div>
@@ -103,25 +108,26 @@ const Chat = () => {
               className="flex-1 bg-gray-800 text-white border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <button type="submit" disabled={isLoading}>
-          {isLoading ? (
-            <img
-              src="/templates/loading.png"
-              alt="Sending..."
-              style={{ width: "30px", height: "30px" }}
-            />
-          ) : (
-            <img
-              src="/templates/send.png"
-              alt="Send"
-              style={{ width: "30px", height: "30px" }}
-            />
-          )}
-        </button>
+              {isLoading ? (
+                <img
+                  src="/templates/loading.png"
+                  alt="Sending..."
+                  style={{ width: "30px", height: "30px" }}
+                />
+              ) : (
+                <img
+                  src="/templates/send.png"
+                  alt="Send"
+                  style={{ width: "30px", height: "30px" }}
+                />
+              )}
+            </button>
           </div>
         </form>
       </div>
     </div>
-  );
-};
+  
+    );
+  };
 
-export default Chat;
+  export default Chat;

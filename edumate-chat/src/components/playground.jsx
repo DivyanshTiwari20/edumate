@@ -86,11 +86,13 @@ const Chat = () => {
 
   return (
     <div className="chat-container flex flex-col h-screen justify-center items-center">
-      <div className=" chat-messages flex-1 w-full max-w-4xl overflow-y-auto p-4 space-y-4">
+      <div className="chat-messages flex-1 w-full max-w-4xl overflow-y-auto p-4">
         {messages.map((message, index) => (
-          <div key={index} className={`flex ${message.role === 'user' ? 'justify-end ' : 'justify-start'}`}>
-            <div className={`max-w-xs lg:max-w-md xl:max-w-lg px-4 py-2 rounded-lg ${message.role === 'user' ? 'bg-blue-500 text-white' : 'bg-gray-700 text-white'}`}>
-              {/* Render messages with Markdown */}
+          <div
+            key={index}
+            className={`chat-message ${message.role === 'user' ? 'user' : 'bot'}`}
+          >
+            <div className={`message-box ${message.role}`}>
               <ReactMarkdown>{message.content}</ReactMarkdown>
             </div>
           </div>
@@ -100,34 +102,34 @@ const Chat = () => {
       <div className="container mx-auto max-w-screen-lg p-5">
         <form onSubmit={sendMessage} className="p-4 border-t border-gray-700">
           <div className="flex space-x-4">
-            <input
+            <input  
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Message EduMate"
+              placeholder="Message to start you test"
               className="flex-1 bg-gray-800 text-white border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <button type="submit" disabled={isLoading}>
-          {isLoading ? (
-            <img
-              src="/templates/loading.png"
-              alt="Sending..."
-              style={{ width: "30px", height: "30px" }}
-            />
-          ) : (
-            <img
-              src="/templates/send.png"
-              alt="Send"
-              style={{ width: "30px", height: "30px" }}
-            />
-          )}
-        </button>
+              {isLoading ? (
+                <img
+                  src="/templates/loading.png"
+                  alt="Sending..."
+                  style={{ width: "30px", height: "30px" }}
+                />
+              ) : (
+                <img
+                  src="/templates/send.png"
+                  alt="Send"
+                  style={{ width: "30px", height: "30px" }}
+                />
+              )}
+            </button>
           </div>
         </form>
       </div>
     </div>
-  );
-};
+  
+    );
+  };
 
-export default Chat;
-
+  export default Chat;

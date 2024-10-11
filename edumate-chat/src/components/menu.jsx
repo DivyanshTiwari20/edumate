@@ -7,13 +7,13 @@ function Menu() {
       <ul className="flex space-x-4">
         {/* Navigation Links */}
         <li>
-          <Link to="/chat" className="text-gray-700 hover:text-blue-600">ChatBot</Link>
+          <Link to="/chat" className="text-white-700 hover:text-blue-600"><b>ChatBot</b></Link>
         </li>
         <li>
-          <Link to="/summarizer" className="text-gray-700 hover:text-blue-600">Summarizer</Link>
+          <Link to="/summarizer" className="text-white-700 hover:text-blue-600"><b>Summarizer</b></Link>
         </li>
         <li>
-          <Link to="/playground" className="text-gray-700 hover:text-blue-600">PlayGround</Link>
+          <Link to="/playground" className="text-white-700 hover:text-blue-600 mr-7"><b>PlayGround</b></Link>
         </li>
       </ul>
     </nav>
